@@ -1,8 +1,6 @@
-import axios from 'axios'
-
 const getDebtors = async () => {
-    const res = await axios.get(process.env.gslink)
-    return res.data.text
+    const res = await fetch(process.env.gslink)
+    return res.body.text
 }
 
 export default function handler(req, res) {
