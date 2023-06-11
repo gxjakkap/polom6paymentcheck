@@ -3,13 +3,13 @@ const getDebtors = async () => {
     return res.body.text
 }
 
-async function sendMessage(message, channelAccessToken, userId) {
+async function sendMessage(message, channelAccessToken, replyToken) {
     const headers = { 'Authorization': `Bearer ${channelAccessToken}`, 'Content-Type': 'application/json' }
     const body = {
-        to: userId,
+        replyToken: replyToken,
         messages: [message],
     }
-    return fetch('https://api.line.me/v2/bot/message/push', {body: body, headers: headers})
+    return fetch('https://api.line.me/v2/bot/message/reply', {body: body, headers: headers})
 }
 
 export default async function handler(req, res) {
@@ -22,10 +22,10 @@ export default async function handler(req, res) {
     const { events } = req.body
 
     events.forEach(async (event) => {
-        if (event.type === "message"){
-            if (event.message.text === "gdt"){
+        if (event.type == "message"){
+            if (event.message.text == "gdt"){
                 const msg = await getDebtors()
-                await sendMessage(msg, process.env.CAT, event.source.userId)
+                await sendMessage(msg, process.env.CAT, event.replyToken)
             }
         }
     })
