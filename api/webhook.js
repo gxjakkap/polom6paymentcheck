@@ -25,6 +25,7 @@ export default async function handler(req, res) {
         if (event.type == "message"){
             if (event.message.text == "gdt"){
                 const msg = await getDebtors()
+                console.log(msg)
                 await sendMessage(msg, process.env.CAT, event.replyToken)
             }
         }
