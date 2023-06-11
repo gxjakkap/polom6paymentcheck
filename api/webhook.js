@@ -9,7 +9,7 @@ async function sendMessage(message, channelAccessToken, userId) {
         to: userId,
         messages: [message],
     }
-    return axios.post('https://api.line.me/v2/bot/message/push', body, { headers: headers })
+    return fetch('https://api.line.me/v2/bot/message/push', {body: body, headers: headers})
 }
 
 export default async function handler(req, res) {
@@ -31,5 +31,7 @@ export default async function handler(req, res) {
     })
 
     console.log(req.body)
+    console.log(process.env.gslink)
+    console.log(process.env.CAT)
     res.status(200).json({ status: 200, message: "OK" })
 }
